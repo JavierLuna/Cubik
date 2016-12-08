@@ -336,11 +336,27 @@ class RubikCube:
 
 	def M(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		a1, a4, a7 = face1[1], face1[4], face1[7]
+		b1, b4, b7 = face2[1], face2[4], face2[7]
+		d1, d4, d7 = face4[1], face4[4], face4[7]
+		f1, f4, f7 = face6[1], face6[4], face6[7]
+
+		self.cube[0][1], self.cube[0][4], self.cube[0][7] = f1, f4, f7
+		self.cube[1][1], self.cube[1][4], self.cube[1][7] = a1, a4, a7
+		self.cube[3][1], self.cube[3][4], self.cube[3][7] = b1, b4, b7
+		self.cube[5][1], self.cube[5][4], self.cube[5][7] = d1, d4, d7
 
 	def M1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		a1, a4, a7 = face1[1], face1[4], face1[7]
+		b1, b4, b7 = face2[1], face2[4], face2[7]
+		d1, d4, d7 = face4[1], face4[4], face4[7]
+		f1, f4, f7 = face6[1], face6[4], face6[7]
+
+		self.cube[0][1], self.cube[0][4], self.cube[0][7] = b1, b4, b7
+		self.cube[1][1], self.cube[1][4], self.cube[1][7] = d1, d4, d7
+		self.cube[3][1], self.cube[3][4], self.cube[3][7] = f1, f4, f7
+		self.cube[5][1], self.cube[5][4], self.cube[5][7] = a1, a4, a7
 
 	def E(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
