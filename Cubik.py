@@ -156,10 +156,10 @@ class RubikCube:
 		d0, d3, d6 = face4[0], face4[3], face4[6]
 		f0, f3, f6 = face6[0], face6[3], face6[6]
 
-		self.cube[0][2], self.cube[0][5], self.cube[0][8] = f0, f3, f6
-		self.cube[1][2], self.cube[1][5], self.cube[1][8] = a0, a3, a6
-		self.cube[3][2], self.cube[3][5], self.cube[3][8] = b0, b3, b6
-		self.cube[5][2], self.cube[5][5], self.cube[5][8] = d0, d3, d6
+		self.cube[0][0], self.cube[0][3], self.cube[0][6] = f0, f3, f6
+		self.cube[1][0], self.cube[1][3], self.cube[1][6] = a0, a3, a6
+		self.cube[3][0], self.cube[3][3], self.cube[3][6] = b0, b3, b6
+		self.cube[5][0], self.cube[5][3], self.cube[5][6] = d0, d3, d6
 
 		self.cube[2][0], self.cube[2][1], self.cube[2][2] = c6, c3, c0
 		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c7, c4, c1
@@ -176,14 +176,14 @@ class RubikCube:
 		d0, d3, d6 = face4[0], face4[3], face4[6]
 		f0, f3, f6 = face6[0], face6[3], face6[6]
 
-		self.cube[0][2], self.cube[0][5], self.cube[0][8] = b0, b3, b6
-		self.cube[1][2], self.cube[1][5], self.cube[1][8] = d0, d3, d6
-		self.cube[3][2], self.cube[3][5], self.cube[3][8] = f0, f3, f6
-		self.cube[5][2], self.cube[5][5], self.cube[5][8] = a0, a3, a6
+		self.cube[0][0], self.cube[0][3], self.cube[0][6] = b0, b3, b6
+		self.cube[1][0], self.cube[1][3], self.cube[1][6] = d0, d3, d6
+		self.cube[3][0], self.cube[3][3], self.cube[3][6] = f0, f3, f6
+		self.cube[5][0], self.cube[5][3], self.cube[5][6] = a0, a3, a6
 
-		self.cube[2][0], self.cube[2][1], self.cube[2][2] = c6, c3, c0
-		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c7, c4, c1
-		self.cube[2][6], self.cube[2][7], self.cube[2][8] = c8, c5, c2
+		self.cube[2][0], self.cube[2][1], self.cube[2][2] = c2, c5, c8
+		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c1, c4, c7
+		self.cube[2][6], self.cube[2][7], self.cube[2][8] = c0, c3, c6
 
 	def U1(self):
 
