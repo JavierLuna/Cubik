@@ -96,3 +96,14 @@ class TestRubikCube(unittest.TestCase):
 			cube.D1()
 		last_state = cube.json
 		self.assertEqual(first_state, last_state)
+
+	def test_DB_fingertrick(self):
+		cube = RubikCube()
+		first_state = cube.json
+		for _ in range(6):
+			cube.B()
+			cube.D()
+			cube.B1()
+			cube.D1()
+		last_state = cube.json
+		self.assertEqual(first_state, last_state)

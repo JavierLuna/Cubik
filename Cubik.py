@@ -298,11 +298,41 @@ class RubikCube:
 
 	def B(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+
+		b0, b1, b2 = face2[0], face2[1], face2[2]
+		c0, c3, c6 = face3[0], face3[3], face3[6]
+		e2, e5, e8 = face5[2], face5[5], face5[8]
+		f6, f7, f8 = face6[6], face6[7], face6[8]
+
+		a0, a1, a2, a3, a4, a5, a6, a7, a8 = face1
+
+		self.cube[1][0], self.cube[1][1], self.cube[1][2] = e2, e5, e8
+		self.cube[2][0], self.cube[2][3], self.cube[2][6] = b2, b1, b0
+		self.cube[4][2], self.cube[4][5], self.cube[4][8] = f8, f7, f6
+		self.cube[5][6], self.cube[5][7], self.cube[5][8] = c0, c3, c6
+
+		self.cube[0][0], self.cube[0][1], self.cube[0][2] = a6, a3, a0
+		self.cube[0][3], self.cube[0][4], self.cube[0][5] = a7, a4, a1
+		self.cube[0][6], self.cube[0][7], self.cube[0][8] = a8, a5, a2
+
 
 	def B1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		b0, b1, b2 = face2[0], face2[1], face2[2]
+		c0, c3, c6 = face3[0], face3[3], face3[6]
+		e2, e5, e8 = face5[2], face5[5], face5[8]
+		f6, f7, f8 = face6[6], face6[7], face6[8]
+
+		a0, a1, a2, a3, a4, a5, a6, a7, a8 = face1
+
+		self.cube[1][0], self.cube[1][1], self.cube[1][2] = c6, c3, c0
+		self.cube[2][0], self.cube[2][3], self.cube[2][6] = f6, f7, f8
+		self.cube[4][2], self.cube[4][5], self.cube[4][8] = b0, b1, b2
+		self.cube[5][6], self.cube[5][7], self.cube[5][8] = e8, e5, e2
+
+		self.cube[0][0], self.cube[0][1], self.cube[0][2] = a2, a5, a8
+		self.cube[0][3], self.cube[0][4], self.cube[0][5] = a1, a4, a7
+		self.cube[0][6], self.cube[0][7], self.cube[0][8] = a0, a3, a6
 
 	def M(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
@@ -325,30 +355,6 @@ class RubikCube:
 		pass
 
 	def S1(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def X(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def X1(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def Y(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def Y1(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def Z(self):
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
-
-	def Z1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
 		pass
 
@@ -461,11 +467,8 @@ class RubikSolver:
 		return False
 
 	def generate_movements(self, last_movement=None):
-		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'X', 'Y', 'Z',
-		                 'M1', 'E1', 'S1', 'X1', 'Y1', 'Z1']
-
+		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1', 'S1']
 		if not last_movement:
 			return all_movements
-
 		all_movements.remove(RubikCube.get_opposite_movement(last_movement))
 		return all_movements
