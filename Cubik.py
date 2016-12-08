@@ -109,12 +109,42 @@ class RubikCube:
 			raise IndexError('No movements were made in the first place')
 
 	def R(self):
+
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		e0, e1, e2, e3, e4, e5, e6, e7, e8 = face5
+
+		a2, a5, a8 = face1[2], face1[5], face1[8]
+		b2, b5, b8 = face2[2], face2[5], face2[8]
+		d2, d5, d8 = face4[2], face4[5], face4[8]
+		f2, f5, f8 = face6[2], face6[5], face6[8]
+
+		self.cube[0][2], self.cube[0][5], self.cube[0][8] = b2, b5, b8
+		self.cube[1][2], self.cube[1][5], self.cube[1][8] = d2, d5, d8
+		self.cube[3][2], self.cube[3][5], self.cube[3][8] = f2, f5, f8
+		self.cube[5][2], self.cube[5][5], self.cube[5][8] = a2, a5, a8
+
+		self.cube[4][0], self.cube[4][1], self.cube[4][2] = e6, e3, e0
+		self.cube[4][3], self.cube[4][4], self.cube[4][5] = e7, e4, e1
+		self.cube[4][6], self.cube[4][7], self.cube[4][8] = e8, e5, e2
 
 	def R1(self):
+
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		e0, e1, e2, e3, e4, e5, e6, e7, e8 = face5
+
+		a2, a5, a8 = face1[2], face1[5], face1[8]
+		b2, b5, b8 = face2[2], face2[5], face2[8]
+		d2, d5, d8 = face4[2], face4[5], face4[8]
+		f2, f5, f8 = face6[2], face6[5], face6[8]
+
+		self.cube[0][2], self.cube[0][5], self.cube[0][8] = f2, f5, f8
+		self.cube[1][2], self.cube[1][5], self.cube[1][8] = a2, a5, a8
+		self.cube[3][2], self.cube[3][5], self.cube[3][8] = b2, b5, b8
+		self.cube[5][2], self.cube[5][5], self.cube[5][8] = d2, d5, d8
+
+		self.cube[4][0], self.cube[4][1], self.cube[4][2] = e2, e5, e8
+		self.cube[4][3], self.cube[4][4], self.cube[4][5] = e1, e4, e7
+		self.cube[4][6], self.cube[4][7], self.cube[4][8] = e0, e3, e6
 
 	def L(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
@@ -126,25 +156,21 @@ class RubikCube:
 	def U1(self):
 
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
+		b0, b1, b2, b3, b4, b5, b6, b7, b8 = face2
+
 		a6, a7, a8 = face1[6], face1[7], face1[8]
 		c0, c1, c2 = face3[0], face3[1], face3[2]
 		d0, d1, d2 = face4[0], face4[1], face4[2]
 		e0, e1, e2 = face5[0], face5[1], face5[2]
 
-		a, b, c, d, e, f, g, h, i = face2
-
-		self.cube[2][0], self.cube[2][1], self.cube[2][2] = a6, a7, a8
+		self.cube[0][6], self.cube[0][7], self.cube[0][8] = e2, e1, e0
+		self.cube[2][0], self.cube[2][1], self.cube[2][2] = a8, a7, a6
 		self.cube[3][0], self.cube[3][1], self.cube[3][2] = c0, c1, c2
-		self.cube[0][6], self.cube[0][7], self.cube[0][8] = e0, e1, e2
 		self.cube[4][0], self.cube[4][1], self.cube[4][2] = d0, d1, d2
-		"""
-		a b c   c f i
-		d e f   b e h
-		g h i   a d g
-		"""
-		self.cube[1][0], self.cube[1][1], self.cube[1][2] = c, f, i
-		self.cube[1][3], self.cube[1][4], self.cube[1][5] = b, e, h
-		self.cube[1][6], self.cube[1][7], self.cube[1][8] = a, d, g
+
+		self.cube[1][0], self.cube[1][1], self.cube[1][2] = b2, b5, b8
+		self.cube[1][3], self.cube[1][4], self.cube[1][5] = b1, b4, b7
+		self.cube[1][6], self.cube[1][7], self.cube[1][8] = b0, b3, b6
 
 	def U(self):
 
