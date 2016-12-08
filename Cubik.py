@@ -218,8 +218,8 @@ class RubikCube:
 
 		self.cube[0][0], self.cube[0][1], self.cube[0][2] = e8, e7, e6
 		self.cube[2][6], self.cube[2][7], self.cube[2][8] = a2, a1, a0
-		self.cube[3][6], self.cube[3][6], self.cube[3][6] = c6, c7, c8
-		self.cube[4][6], self.cube[4][6], self.cube[4][6] = d6, d7, d8
+		self.cube[3][6], self.cube[3][7], self.cube[3][8] = c6, c7, c8
+		self.cube[4][6], self.cube[4][7], self.cube[4][8] = d6, d7, d8
 
 		self.cube[5][0], self.cube[5][1], self.cube[5][2] = f6, f3, f0
 		self.cube[5][3], self.cube[5][4], self.cube[5][5] = f7, f4, f1
@@ -237,8 +237,8 @@ class RubikCube:
 
 		self.cube[0][0], self.cube[0][1], self.cube[0][2] = c8, c7, c6
 		self.cube[2][6], self.cube[2][7], self.cube[2][8] = d6, d7, d8
-		self.cube[3][6], self.cube[3][6], self.cube[3][6] = e6, e7, e8
-		self.cube[4][6], self.cube[4][6], self.cube[4][6] = a2, a1, a0
+		self.cube[3][6], self.cube[3][7], self.cube[3][8] = e6, e7, e8
+		self.cube[4][6], self.cube[4][7], self.cube[4][8] = a2, a1, a0
 
 		self.cube[5][0], self.cube[5][1], self.cube[5][2] = f2, f5, f8
 		self.cube[5][3], self.cube[5][4], self.cube[5][5] = f1, f4, f7
