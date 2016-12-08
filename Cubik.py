@@ -167,7 +167,23 @@ class RubikCube:
 
 
 	def L1(self):
-		pass
+
+		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
+		c0, c1, c2, c3, c4, c5, c6, c7, c8 = face3
+
+		a0, a3, a6 = face1[0], face1[3], face1[6]
+		b0, b3, b6 = face2[0], face2[3], face2[6]
+		d0, d3, d6 = face4[0], face4[3], face4[6]
+		f0, f3, f6 = face6[0], face6[3], face6[6]
+
+		self.cube[0][2], self.cube[0][5], self.cube[0][8] = b0, b3, b6
+		self.cube[1][2], self.cube[1][5], self.cube[1][8] = d0, d3, d6
+		self.cube[3][2], self.cube[3][5], self.cube[3][8] = f0, f3, f6
+		self.cube[5][2], self.cube[5][5], self.cube[5][8] = a0, a3, a6
+
+		self.cube[2][0], self.cube[2][1], self.cube[2][2] = c6, c3, c0
+		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c7, c4, c1
+		self.cube[2][6], self.cube[2][7], self.cube[2][8] = c8, c5, c2
 
 	def U1(self):
 
