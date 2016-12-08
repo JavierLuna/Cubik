@@ -205,10 +205,14 @@ class RubikCube:
 		self.cube[3][6], self.cube[3][6], self.cube[3][6] = c6, c7, c8
 		self.cube[4][6], self.cube[4][6], self.cube[4][6] = d6, d7, d8
 
+		self.cube[5][0], self.cube[5][1], self.cube[5][2] = f6, f3, f0
+		self.cube[5][3], self.cube[5][4], self.cube[5][5] = f7, f4, f1
+		self.cube[5][6], self.cube[5][7], self.cube[5][8] = f8, f5, f2
+
 
 	def D1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+
 
 	def F(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
