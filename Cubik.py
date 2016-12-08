@@ -165,7 +165,6 @@ class RubikCube:
 		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c7, c4, c1
 		self.cube[2][6], self.cube[2][7], self.cube[2][8] = c8, c5, c2
 
-
 	def L1(self):
 
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
@@ -184,25 +183,6 @@ class RubikCube:
 		self.cube[2][0], self.cube[2][1], self.cube[2][2] = c2, c5, c8
 		self.cube[2][3], self.cube[2][4], self.cube[2][5] = c1, c4, c7
 		self.cube[2][6], self.cube[2][7], self.cube[2][8] = c0, c3, c6
-
-	def U1(self):
-
-		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		b0, b1, b2, b3, b4, b5, b6, b7, b8 = face2
-
-		a6, a7, a8 = face1[6], face1[7], face1[8]
-		c0, c1, c2 = face3[0], face3[1], face3[2]
-		d0, d1, d2 = face4[0], face4[1], face4[2]
-		e0, e1, e2 = face5[0], face5[1], face5[2]
-
-		self.cube[0][6], self.cube[0][7], self.cube[0][8] = e2, e1, e0
-		self.cube[2][0], self.cube[2][1], self.cube[2][2] = a8, a7, a6
-		self.cube[3][0], self.cube[3][1], self.cube[3][2] = c0, c1, c2
-		self.cube[4][0], self.cube[4][1], self.cube[4][2] = d0, d1, d2
-
-		self.cube[1][0], self.cube[1][1], self.cube[1][2] = b2, b5, b8
-		self.cube[1][3], self.cube[1][4], self.cube[1][5] = b1, b4, b7
-		self.cube[1][6], self.cube[1][7], self.cube[1][8] = b0, b3, b6
 
 	def U(self):
 
@@ -223,6 +203,25 @@ class RubikCube:
 		self.cube[1][3], self.cube[1][4], self.cube[1][5] = b7, b4, b1
 		self.cube[1][6], self.cube[1][7], self.cube[1][8] = b8, b5, b2
 
+	def U1(self):
+
+		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
+		b0, b1, b2, b3, b4, b5, b6, b7, b8 = face2
+
+		a6, a7, a8 = face1[6], face1[7], face1[8]
+		c0, c1, c2 = face3[0], face3[1], face3[2]
+		d0, d1, d2 = face4[0], face4[1], face4[2]
+		e0, e1, e2 = face5[0], face5[1], face5[2]
+
+		self.cube[0][6], self.cube[0][7], self.cube[0][8] = e2, e1, e0
+		self.cube[2][0], self.cube[2][1], self.cube[2][2] = a8, a7, a6
+		self.cube[3][0], self.cube[3][1], self.cube[3][2] = c0, c1, c2
+		self.cube[4][0], self.cube[4][1], self.cube[4][2] = d0, d1, d2
+
+		self.cube[1][0], self.cube[1][1], self.cube[1][2] = b2, b5, b8
+		self.cube[1][3], self.cube[1][4], self.cube[1][5] = b1, b4, b7
+		self.cube[1][6], self.cube[1][7], self.cube[1][8] = b0, b3, b6
+
 	def D(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
 		f0, f1, f2, f3, f4, f5, f6, f7, f8 = face6
@@ -240,7 +239,6 @@ class RubikCube:
 		self.cube[5][0], self.cube[5][1], self.cube[5][2] = f6, f3, f0
 		self.cube[5][3], self.cube[5][4], self.cube[5][5] = f7, f4, f1
 		self.cube[5][6], self.cube[5][7], self.cube[5][8] = f8, f5, f2
-
 
 	def D1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
@@ -261,12 +259,42 @@ class RubikCube:
 		self.cube[5][6], self.cube[5][7], self.cube[5][8] = f0, f3, f6
 
 	def F(self):
+
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		d0, d1, d2, d3, d4, d5, d6, d7, d8 = face4
+
+		b6, b7, b8 = face2[6], face2[7], face2[8]
+		c2, c5, c8 = face3[2], face3[5], face3[8]
+		e0, e3, e6 = face5[0], face5[3], face5[6]
+		f0, f1, f2 = face6[0], face6[1], face6[2]
+
+		self.cube[1][6], self.cube[1][7], self.cube[1][8] = c8, c5, c2
+		self.cube[2][2], self.cube[2][5], self.cube[2][8] = f0, f1, f2
+		self.cube[4][0], self.cube[4][3], self.cube[4][6] = b6, b7, b8
+		self.cube[5][0], self.cube[5][1], self.cube[5][2] = e6, e3, e0
+
+		self.cube[3][0], self.cube[3][1], self.cube[3][2] = d6, d3, d0
+		self.cube[3][3], self.cube[3][4], self.cube[3][5] = d7, d4, d1
+		self.cube[3][6], self.cube[3][7], self.cube[3][8] = d8, d5, d2
 
 	def F1(self):
+
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		d0, d1, d2, d3, d4, d5, d6, d7, d8 = face4
+
+		b6, b7, b8 = face2[6], face2[7], face2[8]
+		c2, c5, c8 = face3[2], face3[5], face3[8]
+		e0, e3, e6 = face5[0], face5[3], face5[6]
+		f0, f1, f2 = face6[0], face6[1], face6[2]
+
+		self.cube[1][6], self.cube[1][7], self.cube[1][8] = e0, e3, e6
+		self.cube[2][2], self.cube[2][5], self.cube[2][8] = b8, b7, b6
+		self.cube[4][0], self.cube[4][3], self.cube[4][6] = f2, f1, f0
+		self.cube[5][0], self.cube[5][1], self.cube[5][2] = c2, c5, c8
+
+		self.cube[3][0], self.cube[3][1], self.cube[3][2] = d2, d5, d8
+		self.cube[3][3], self.cube[3][4], self.cube[3][5] = d1, d4, d7
+		self.cube[3][6], self.cube[3][7], self.cube[3][8] = d0, d3, d6
 
 	def B(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
