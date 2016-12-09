@@ -386,11 +386,28 @@ class RubikCube:
 
 	def S(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		b3, b4, b5 = face2[3], face2[4], face2[5]
+		c1, c4, c7 = face3[1], face3[4], face3[7]
+		e1, e4, e7 = face5[1], face5[4], face5[7]
+		f3, f4, f5 = face6[3], face6[4], face6[5]
+
+		self.cube[1][3], self.cube[1][4], self.cube[1][5] = c7, c4, c1
+		self.cube[2][1], self.cube[2][4], self.cube[2][7] = f3, f4, f5
+		self.cube[4][1], self.cube[4][4], self.cube[4][7] = b3, b4, b5
+		self.cube[5][3], self.cube[5][4], self.cube[5][5] = e7, e4, e1
+
 
 	def S1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
-		pass
+		b3, b4, b5 = face2[3], face2[4], face2[5]
+		c1, c4, c7 = face3[1], face3[4], face3[7]
+		e1, e4, e7 = face5[1], face5[4], face5[7]
+		f3, f4, f5 = face6[3], face6[4], face6[5]
+
+		self.cube[1][3], self.cube[1][4], self.cube[1][5] = e1, e4, e7
+		self.cube[2][1], self.cube[2][4], self.cube[2][7] = b5, b4, b3
+		self.cube[4][1], self.cube[4][4], self.cube[4][7] = f5, f4, f3
+		self.cube[5][3], self.cube[5][4], self.cube[5][5] = c1, c4, c7
 
 	def check(self, debug=False):  # Use only with numeric cube
 		cells = {a: 0 for a in range(1, 7)}
