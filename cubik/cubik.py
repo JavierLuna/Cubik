@@ -552,7 +552,7 @@ class HeuristicSolver:
 		self.possible_solutions = {} #Heuristic -> [movements]
 		self.smallest_solution = 40000
 		self.n_solutions = 0
-		self.randomizer_probability = 0.1
+		self.randomizer_probability = 1
 
 	def get_heuristic(self, cube):
 		heuristic = 0
@@ -563,7 +563,7 @@ class HeuristicSolver:
 		return heuristic
 
 	def __randomizer(self):
-		if random.random() < self.randomizer_probability:
+		if random.randint(0, 100) <= self.randomizer_probability:
 			return 0
 		else:
 			return -1
