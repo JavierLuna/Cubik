@@ -521,7 +521,6 @@ class RubikSolver:
 				print("Trying movement", movement, ",", movements_left, "movements left")
 				self.solve(movements_left=movements_left - 1, debug=debug)
 				self.cube.undo()
-
 		return False
 
 	def generate_movements(self, last_movement=None):
