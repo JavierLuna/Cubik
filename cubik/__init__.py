@@ -1,1 +1,1 @@
-from .cubik import RubikCube, RubikSolver
+from .cubik import RubikCube, BacktrackingSolver, HeuristicSolver

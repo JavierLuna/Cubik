@@ -472,8 +472,7 @@ class RubikCube:
 		print("     ", "\t", face6[6], face6[7], face6[8], "\t", "      ")
 
 
-class RubikSolver:
-	GODS_NUMBER = 20  # Minimum movements
+class BacktrackingSolver:
 
 	def __init__(self, cube=None):
 		self.cube = cube or RubikCube()
@@ -481,6 +480,7 @@ class RubikSolver:
 		self.states = {}
 		self.solved_solutions = {}
 		self.smallest_solution = 40000
+		self.n_solutions = 0
 
 	@property
 	def shortest_solution(self):
@@ -503,6 +503,7 @@ class RubikSolver:
 			return False
 
 		if self.cube.solved:  # If the cube is solved add it as a possible solution
+			self.n_solutions += 1
 			solution = copy.copy(self.cube.movements_applied)
 			print("=======  !!!SOLUTION with", len(solution), "movements!!! ========")
 			if len(solution) < self.smallest_solution:
@@ -526,10 +527,113 @@ class RubikSolver:
 			movements = self.generate_movements(self.cube.last_movement)
 			for movement in movements:
 				self.cube.do_movement(movement)
-				print("Trying movement", movement, ",", movements_left, "movements left")
+				print("Trying movement", movement, ",", movements_left, "movements left (", self.n_solutions,"solutions found)")
 				self.solve(movements_left=movements_left - 1, debug=debug)
 				self.cube.undo()
 		return False
+
+	def generate_movements(self, last_movement=None):
+		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1',
+		                 'S1']
+		if not last_movement:
+			return all_movements
+		all_movements.remove(RubikCube.get_opposite_movement(last_movement))
+		return all_movements
+
+class HeuristicSolver:
+
+	LIMIT = 20
+
+	def __init__(self, cube=None):
+		self.cube = cube or RubikCube()
+		self.n_movements_done = 0
+		self.solutions = {}
+		self.past_states = set()
+		self.possible_solutions = {} #Heuristic -> [movements]
+		self.smallest_solution = 40000
+		self.n_solutions = 0
+
+	def get_heuristic(self, cube):
+		heuristic = 0
+		for i, face in enumerate(cube):
+			for j, cell in enumerate(face):
+				if j != 4 and cell == i+1:
+					heuristic += 1
+		return heuristic
+
+	def solve(self):
+		if self.cube.solved:
+			print("Cube was already solved!!")
+			self.solutions[0] = []
+			return
+		print("Generating first movement's heuristics")
+		#Init first heuristics
+		for movement in self.generate_movements():
+			self.cube.do_movement(movement)
+			heuristic = self.get_heuristic(self.cube.cube)
+			if heuristic in self.possible_solutions:
+				self.possible_solutions[heuristic].append([movement])
+			else:
+				self.possible_solutions[heuristic] = [[movement]]
+			self.cube.undo()
+
+		print("Starting...")
+
+		while self.possible_solutions:
+
+			greater_heuristic = sorted(self.possible_solutions.keys())[-1]
+			random.shuffle(self.possible_solutions[greater_heuristic])
+			possible_solution = self.possible_solutions[greater_heuristic].pop()
+			print("Solutions:", self.n_solutions, "\tScore:", greater_heuristic, "\tPossible solution:", possible_solution)
+
+			#If no more solutions with that heuristic score delete key
+			if not self.possible_solutions[greater_heuristic]:
+				del self.possible_solutions[greater_heuristic]
+
+			#If possible solution is longer than smallest solution found, cut off branch
+			if len(possible_solution) >= self.smallest_solution:
+				continue
+
+			#If current state has been already reached before, cut off branch
+			if self.cube.json in self.past_states:
+				continue
+
+			#Performs movements of possible solution to the cube
+			for movement in possible_solution:
+				self.cube.do_movement(movement)
+
+
+			#Check if cube is solved
+			if self.cube.solved:
+				print("Found solution in", len(possible_solution), "movements!!")
+				self.n_solutions += 1
+				if len(possible_solution) < self.smallest_solution:
+					self.smallest_solution = len(possible_solution)
+
+				if not self.solutions.get(len(possible_solution), False):
+					self.solutions[len(possible_solution)] = [copy.deepcopy(possible_solution)]
+				else:
+					self.solutions[len(possible_solution)].append(copy.deepcopy(possible_solution))
+
+			# If ongoing possible solutions are longer than the smallest solution, cut off branch
+			if len(possible_solution) + 1 > self.smallest_solution or len(possible_solution) > HeuristicSolver.LIMIT:
+				continue
+
+			current_heuristic = self.get_heuristic(self.cube.cube)
+
+			if not self.possible_solutions.get(current_heuristic, False):
+				self.possible_solutions[current_heuristic] = []
+
+			for new_movement in self.generate_movements(possible_solution[-1]):
+				new_solutions = copy.copy(possible_solution)
+				new_solutions.append(new_movement)
+				self.possible_solutions[current_heuristic].append(new_solutions)
+
+			for _ in possible_solution:
+				self.cube.undo()
+
+
+
 
 	def generate_movements(self, last_movement=None):
 		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1',

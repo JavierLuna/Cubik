@@ -1,8 +1,8 @@
-from cubik import RubikSolver
-import json
+from cubik import HeuristicSolver, RubikCube
 
-solver = RubikSolver()
-solver.solve()
-
-with open('solution.json', 'w') as file:
-	json.dump(solver.shortest_solution, file,  indent=4, sort_keys=True)
+solver = HeuristicSolver()
+try:
+	solver.solve()
+except KeyboardInterrupt:
+	pass
+print(solver.solutions)
