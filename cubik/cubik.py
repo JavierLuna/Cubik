@@ -2,6 +2,8 @@ import copy
 import json
 import random
 
+import time
+
 
 class RubikCube:
 	SOLVED = [[num for _ in range(9)] for num in range(1, 7)]
@@ -31,13 +33,18 @@ class RubikCube:
 		 'f6', 'f7', 'f8']
 	]
 
+	POSSIBLE_MOVEMENTS = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1',
+	                      'S1']
+
 	def __init__(self, cube=None):
 		"""
 		Creates a cube
 		:param cube: List of 6 (cube's faces) lists with 9 elements each (cells per face).
 					None to generate a random one
 		"""
-		self.cube = cube or RubikCube.generate_random_cube()
+		self.cube = cube or copy.deepcopy(RubikCube.SOLVED)
+		if not cube:
+			self.generate_random_cube()
 		self.initial_cube = copy.deepcopy(self.cube)
 		self.movements_applied = []
 		self.__functions = {'D': self.D}
@@ -315,7 +322,6 @@ class RubikCube:
 		self.cube[0][3], self.cube[0][4], self.cube[0][5] = a7, a4, a1
 		self.cube[0][6], self.cube[0][7], self.cube[0][8] = a8, a5, a2
 
-
 	def B1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
 		b0, b1, b2 = face2[0], face2[1], face2[2]
@@ -396,7 +402,6 @@ class RubikCube:
 		self.cube[4][1], self.cube[4][4], self.cube[4][7] = b3, b4, b5
 		self.cube[5][3], self.cube[5][4], self.cube[5][5] = e7, e4, e1
 
-
 	def S1(self):
 		face1, face2, face3, face4, face5, face6 = copy.deepcopy(self.cube)
 		b3, b4, b5 = face2[3], face2[4], face2[5]
@@ -413,10 +418,8 @@ class RubikCube:
 		cells = {a: 0 for a in range(1, 7)}
 		for face in self.cube:
 			for cell in face:
-				if cell.isnumeric():
-					cells[cell] += 1
-				else:
-					raise Exception('Use check() only with numeric cubes')
+				cells[cell] += 1
+
 		for cell in cells:
 			if cells[cell] != 9:
 				if debug:
@@ -429,10 +432,13 @@ class RubikCube:
 		random.shuffle(cell_list)
 		return cell_list.pop()
 
-	@staticmethod
-	def generate_random_cube():
-		cell_list = [num for num in range(1, 7) for _ in range(8)]
-		return [[RubikCube.__get_random_cell(cell_list) if j != 4 else i for j in range(9)] for i in range(1, 7)]
+	def generate_random_cube(self):
+		self.cube = copy.deepcopy(RubikCube.SOLVED)
+		movements = random.randint(200, 500)
+		for _ in range(movements):
+			movement = random.choice(RubikCube.POSSIBLE_MOVEMENTS)
+			m = getattr(self, movement)
+			m()
 
 	def display(self):
 		"""
@@ -446,14 +452,14 @@ class RubikCube:
 		"""
 		face1, face2, face3, face4, face5, face6 = self.cube
 
-		print("     ", "\t", "\t", face1[0], face1[1], face1[2], "\t", "      ")
-		print("     ", "\t", "\t", face1[3], face1[4], face1[5], "\t", "      ")
-		print("     ", "\t", "\t", face1[6], face1[7], face1[8], "\t", "      ")
+		print("     ", "\t", face1[0], face1[1], face1[2], "\t", "      ")
+		print("     ", "\t", face1[3], face1[4], face1[5], "\t", "      ")
+		print("     ", "\t", face1[6], face1[7], face1[8], "\t", "      ")
 		print()
 		# Cara 2
-		print("     ", "\t", "\t", face2[0], face2[1], face2[2], "\t", "      ")
-		print("     ", "\t", "\t", face2[3], face2[4], face2[5], "\t", "      ")
-		print("     ", "\t", "\t", face2[6], face2[7], face2[8], "\t", "      ")
+		print("     ", "\t", face2[0], face2[1], face2[2], "\t", "      ")
+		print("     ", "\t", face2[3], face2[4], face2[5], "\t", "      ")
+		print("     ", "\t", face2[6], face2[7], face2[8], "\t", "      ")
 		print()
 		# Caras 3, 4 y 5
 		print(face3[0], face3[1], face3[2], "\t", face4[0], face4[1], face4[2], "\t", face5[0], face5[1], face5[2])
@@ -461,9 +467,9 @@ class RubikCube:
 		print(face3[6], face3[7], face3[8], "\t", face4[6], face4[7], face4[8], "\t", face5[6], face5[7], face5[8])
 		print()
 		# Cara 6
-		print("     ", "\t", "\t", face6[0], face6[1], face6[2], "\t", "      ")
-		print("     ", "\t", "\t", face6[3], face6[4], face6[5], "\t", "      ")
-		print("     ", "\t", "\t", face6[6], face6[7], face6[8], "\t", "      ")
+		print("     ", "\t", face6[0], face6[1], face6[2], "\t", "      ")
+		print("     ", "\t", face6[3], face6[4], face6[5], "\t", "      ")
+		print("     ", "\t", face6[6], face6[7], face6[8], "\t", "      ")
 
 
 class RubikSolver:
@@ -479,7 +485,8 @@ class RubikSolver:
 	def solve(self, movements_left=20, debug=False):
 		if debug:
 			print(self.cube.movements_applied)
-			# self.cube.display()
+			self.cube.display()
+			time.sleep(2)
 			self.cube.check()
 
 		# If there's a solution already with less movements than this try
@@ -518,7 +525,8 @@ class RubikSolver:
 		return False
 
 	def generate_movements(self, last_movement=None):
-		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1', 'S1']
+		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1',
+		                 'S1']
 		if not last_movement:
 			return all_movements
 		all_movements.remove(RubikCube.get_opposite_movement(last_movement))

@@ -1,6 +1,8 @@
-from Cubik import RubikCube
+from cubik import RubikCube, RubikSolver
+import time
 
-cube = RubikCube(cube=RubikCube.DEBUG)
-cube.do_movement('U1')
+cube = RubikCube(cube=RubikCube.SOLVED)
 cube.display()
-
+cube.U()
+solver = RubikSolver(cube=cube)
+solver.solve(debug=True)
