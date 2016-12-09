@@ -482,6 +482,14 @@ class RubikSolver:
 		self.solved_solutions = {}
 		self.smallest_solution = 40000
 
+	@property
+	def shortest_solution(self):
+		if self.solved_solutions:
+			shortest_solution = self.solved_solutions[sorted(self.solved_solutions.keys())[0]]
+			return {'initial_cube': self.cube.initial_cube, 'solution': shortest_solution.pop()}
+		else:
+			raise IndexError('No solutions found yet')
+
 	def solve(self, movements_left=20, debug=False):
 		if debug:
 			print(self.cube.movements_applied)
