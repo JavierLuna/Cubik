@@ -111,10 +111,10 @@ class TestRubikCube(unittest.TestCase):
 	def test_MU_fingertrick(self):
 		cube = RubikCube()
 		first_state = cube.json
-		for _ in range(6):
+		for _ in range(5):
+			cube.U()
 			cube.M()
-			cube.B()
+			cube.U1()
 			cube.M1()
-			cube.B1()
 		last_state = cube.json
 		self.assertEqual(first_state, last_state)
