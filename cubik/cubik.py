@@ -552,6 +552,7 @@ class HeuristicSolver:
 		self.possible_solutions = {} #Heuristic -> [movements]
 		self.smallest_solution = 40000
 		self.n_solutions = 0
+		self.randomizer_probability = 0.1
 
 	def get_heuristic(self, cube):
 		heuristic = 0
@@ -560,6 +561,12 @@ class HeuristicSolver:
 				if j != 4 and cell == i+1:
 					heuristic += 1
 		return heuristic
+
+	def __randomizer(self):
+		if random.random() < self.randomizer_probability:
+			return 0
+		else:
+			return -1
 
 	def solve(self):
 		if self.cube.solved:
@@ -581,7 +588,7 @@ class HeuristicSolver:
 
 		while self.possible_solutions:
 
-			greater_heuristic = sorted(self.possible_solutions.keys())[-1]
+			greater_heuristic = sorted(self.possible_solutions.keys())[self.__randomizer()]
 			random.shuffle(self.possible_solutions[greater_heuristic])
 			possible_solution = self.possible_solutions[greater_heuristic].pop()
 			print("Solutions:", self.n_solutions, "\tScore:", greater_heuristic, "\tPossible solution:", possible_solution)
