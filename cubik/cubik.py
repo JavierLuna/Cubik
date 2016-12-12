@@ -563,7 +563,7 @@ class HeuristicSolver:
 		return heuristic
 
 	def __randomizer(self):
-		if random.randint(0, 100) <= self.randomizer_probability:
+		if random.randint(0, 100) < self.randomizer_probability:
 			return 0
 		else:
 			return -1
@@ -601,14 +601,15 @@ class HeuristicSolver:
 			if len(possible_solution) >= self.smallest_solution:
 				continue
 
-			#If current state has been already reached before, cut off branch
-			if self.cube.json in self.past_states:
-				continue
+
 
 			#Performs movements of possible solution to the cube
 			for movement in possible_solution:
 				self.cube.do_movement(movement)
 
+			# If current state has been already reached before, cut off branch
+			if self.cube.json in self.past_states:
+				continue
 
 			#Check if cube is solved
 			if self.cube.solved:
@@ -645,6 +646,7 @@ class HeuristicSolver:
 	def generate_movements(self, last_movement=None):
 		all_movements = ['U', 'D', 'R', 'L', 'F', 'B', 'U1', 'D1', 'R1', 'L1', 'F1', 'B1', 'M', 'E', 'S', 'M1', 'E1',
 		                 'S1']
+		random.shuffle(all_movements)
 		if not last_movement:
 			return all_movements
 		all_movements.remove(RubikCube.get_opposite_movement(last_movement))
